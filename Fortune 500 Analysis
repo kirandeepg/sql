@@ -1,0 +1,32 @@
+--Assign all the companies in retail industry as "high allowance","moderate allowance","average allowance","below average" 
+--which industry have a total revnue atleast 1500 billions and calculate the total revenue.
+--show the company who have atleast 15 maternity leave weeks AND 15 paid time off days weeks
+--show the company in the technology who have maximum number of employees.
+
+
+--Assign all the companies in retail industry as "high allowance","moderate allowance","average allowance","below average" 
+select company_name, 
+case 
+when paid_time_off_days >=24 then 'high allowance'  
+when paid_time_off_days>=20 then 'moderate allowance'
+when paid_time_off_days>=15 then 'average allowance'
+else 'below allowance'
+end as PTO_allowance
+from fortune_companies;
+
+--which industry have a total revnue atleast 1500 billions and calculate the total revenue.
+select company_name,round(sum(revenue)) as total_revenue
+from fortune_companies
+group by industry
+having total_revenue>=1500 
+;
+--show the company who have atleast 15 maternity leave weeks AND 15 paid time off days weeks. 
+select company_name
+from fortune_companies
+where maternity_leave_weeks>=15 and paid_time_off_days>=15
+;
+--show the company in the technology industry who have maximum number of employees.
+select company_name,max(employees)
+from fortune_companies
+where industry='Technology'
+;
